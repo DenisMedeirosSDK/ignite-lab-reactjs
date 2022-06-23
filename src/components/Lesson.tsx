@@ -1,12 +1,13 @@
-import { CheckCircle, Lock } from 'phosphor-react';
-import { isPast, format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
+import { CheckCircle, Lock } from "phosphor-react";
+import { isPast, format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+import { Link } from "react-router-dom";
 
 interface LessonProps {
   title: string;
   slug: string;
   availableAt: Date;
-  type: 'live' | 'class';
+  type: "live" | "class";
 }
 export function Lesson(props: LessonProps) {
   const isLessonAvailable = isPast(props.availableAt);
@@ -18,9 +19,9 @@ export function Lesson(props: LessonProps) {
     }
   );
   return (
-    <a href="#">
+    <Link to={`/event/lesson/${props.slug}`} className="group">
       <span className="text-gray-300">{availableDateFormatte}</span>
-      <div className="rounded border border-gray-500 p-4 mt-2">
+      <div className="rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500">
         <header className="flex items-center justify-between">
           {isLessonAvailable ? (
             <span className="text-sm text-blue-500 font-medium flex items-center gap-2">
@@ -34,11 +35,11 @@ export function Lesson(props: LessonProps) {
             </span>
           )}
           <span className="text-xs uppercase rounded px-2 py-[0.125rem] text-white border ">
-            {props.type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
+            {props.type === "live" ? "AO VIVO" : "AULA PRÁTICA"}
           </span>
         </header>
         <strong className="text-gray-200 mt-5 block">{props.title}</strong>
       </div>
-    </a>
+    </Link>
   );
 }
