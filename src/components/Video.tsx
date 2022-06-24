@@ -1,4 +1,4 @@
-import { DefaultUi, Embed, Player, Youtube } from "@vime/react";
+import { DefaultUi, Player, Youtube } from "@vime/react";
 import {
   CaretRight,
   DiscordLogo,
@@ -47,6 +47,7 @@ export function Video(props: VideoProps) {
     variables: {
       slug: props.lessonSlug,
     },
+    fetchPolicy: "no-cache",
   });
 
   if (!data) {
@@ -57,15 +58,22 @@ export function Video(props: VideoProps) {
     );
   }
 
-  console.log(data);
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
           <Player>
-            <Youtube videoId={data.lesson.videoId} />
+            <Youtube
+              key={data.lesson.videoId}
+              cookies={true}
+              videoId={data.lesson.videoId}
+            />
             <DefaultUi />
           </Player>
+          {/* <iframe
+            src={`https://youtube.com/embed/${data.lesson.videoId}`}
+            className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video"
+          ></iframe> */}
         </div>
       </div>
 
